@@ -12,23 +12,44 @@ public class RouteService {
 
 	private List<Route> routes;
 
+	/**
+	 * Method for reading the routes and organizing them
+	 * 
+	 * @param strRoutes
+	 *            Must be received as one letter for each city (where the route
+	 *            begins and where it ends) and a number for the distance The comma
+	 *            is used as split parameter.
+	 * @return a List of Route class
+	 */
 	public List<Route> insertRoutes(String strRoutes) {
 		this.routes = new ArrayList<Route>();
 
-		if (strRoutes.isEmpty()) {
+		if (strRoutes == null || strRoutes.isEmpty()) {
 			throw new IllegalArgumentException("The routes must be informed");
 		} else {
 			strRoutes = strRoutes.toUpperCase();
 			List<String> rawRoutes = Arrays.asList(strRoutes.split(","));
 
 			for (String string : rawRoutes) {
-				this.routes.add(new Route(string));
+				string = string.replace(" ", "");
+				if (!string.isEmpty() && string.length() > 2) {
+					this.routes.add(new Route(string));
+				}
 			}
 		}
 
 		return this.routes;
 	}
 
+	/**
+	 * Calculates the distance for a travel between multiples cities If there isn't
+	 * a route between two cities sequentially, a NoSuchRouteException is issued.
+	 * 
+	 * @param cities
+	 *            Must be informed as a string, one letter for city, separated only
+	 *            by "-" The hyphen is used as split parameter.
+	 * @return
+	 */
 	public int distance(String cities) {
 		int distance = 0;
 
@@ -58,6 +79,13 @@ public class RouteService {
 		return distance;
 	}
 
+	/**
+	 * Finds a route between two cities
+	 * 
+	 * @param input
+	 * @return a Route object if there is such route or null if there isn't a way
+	 *         between the two cities.
+	 */
 	private Route findRoute(Route input) {
 		try {
 			return this.routes.stream().filter(route -> route.sameRoute(input)).findFirst().get();
@@ -75,12 +103,12 @@ public class RouteService {
 		while (stops > 0) {
 			Route route = this.findRouteByCityStart(cityStart);
 			travel = travel.concat(route.getCityStart() + "-");
-			
+
 			if (route != null) {
-				
+
 			}
 		}
-		
+
 		return probRoutes;
 	}
 

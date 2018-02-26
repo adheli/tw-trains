@@ -8,10 +8,18 @@ import org.junit.Test;
 import br.adheli.tw.trains.exception.NoSuchRouteException;
 import br.adheli.tw.trains.service.RouteService;
 
+/**
+ * Testing the distance method from RouteService class
+ * @author adheli.tavares
+ *
+ */
 public class RouteServiceDistanceTest {
 
 	private RouteService service;
 
+	/**
+	 * Starts a list of routes for distance testing
+	 */
 	@Before
 	public void setUp() {
 		this.service = new RouteService();
@@ -43,8 +51,14 @@ public class RouteServiceDistanceTest {
 	}
 
 	@Test(expected = NoSuchRouteException.class)
-	public void testDistance5() {
+	public void shouldThrowExceptionNoRouteForEDRoute() {
 		service.distance("A-E-D");
+	}
+
+	@Test
+	public void testDistanceUnder30() {
+		int distance = service.distance("C-E-B-C-E-B-C-E-B-C");
+		assertTrue(distance < 30);
 	}
 
 }

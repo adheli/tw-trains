@@ -1,14 +1,15 @@
 package br.adheli.tw.trains.model;
 
+/**
+ * Model class for a Route
+ * @author adheli.tavares
+ *
+ */
 public class Route {
 
 	private String cityStart;
 	private String cityEnd;
 	private int distance;
-
-	public Route() {
-
-	}
 
 	public Route(String c1, String c2) {
 		this.cityStart = c1;
@@ -16,12 +17,9 @@ public class Route {
 	}
 
 	public Route(String route) {
-		route = route.trim();
-		if (!route.isEmpty() && route.length() > 2) {
-			this.cityStart = route.substring(0, 1);
-			this.cityEnd = route.substring(1, 2);
-			this.distance = Integer.parseInt(route.substring(2));
-		}
+		this.cityStart = route.substring(0, 1);
+		this.cityEnd = route.substring(1, 2);
+		this.distance = Integer.parseInt(route.substring(2));
 	}
 
 	public String getCityStart() {

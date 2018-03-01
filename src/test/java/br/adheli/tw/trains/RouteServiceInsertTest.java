@@ -23,9 +23,9 @@ public class RouteServiceInsertTest {
 	 * Verifies if nine routes are inserted correctly
 	 */
 	@Test
-	public void testInsertRoutes() {
+	public void shouldInsertRoutesTest() {
 		Route ce2 = new Route("CE2");
-		List<Route> routes = service.insertRoutes("AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7");
+		List<Route> routes = service.readInRawRoutes("AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7");
 
 		assertTrue(routes.size() == 9);
 		assertTrue(routes.contains(ce2));
@@ -35,9 +35,9 @@ public class RouteServiceInsertTest {
 	 * Verifies if routes without all parameters (city 1, city 2 and distance) cannot be inserted
 	 */
 	@Test
-	public void shouldNotInsertRoutesWithoutAllParameters() {
+	public void shouldNotInsertRoutesWithoutAllParametersTest() {
 		Route ce2 = new Route("CE2");
-		List<Route> routes = service.insertRoutes("A 5, BC4, CD8, DC , DE6, AD5, CE2, EB3, AE10");
+		List<Route> routes = service.readInRawRoutes("A 5, BC4, CD8, DC , DE6, AD5, CE2, EB3, AE10");
 
 		assertTrue(routes.size() == 7);
 		assertTrue(routes.contains(ce2));
@@ -47,15 +47,25 @@ public class RouteServiceInsertTest {
 	 * Verifies if java IllegalArgumentException is issued when not passing a valid string of routes
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void shouldThrowExceptionInsertRoutesWithoutRoutes() {
-		this.service.insertRoutes("");
+	public void shouldThrowExceptionWithEmptyRoutesTest() {
+		this.service.readInRawRoutes("");
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionWithNullParameterTest() {
+		this.service.readInRawRoutes(null);
 	}
 	
 	/**
-	 * Verifies if java IllegalArgumentException is issued when passing null
-	 */	
-	@Test(expected = IllegalArgumentException.class)
-	public void testInsertRoutesWithoutRoutesAtAll() {
-		this.service.insertRoutes(null);
+	 * Verifies if routes without all parameters (city 1, city 2 and distance) cannot be inserted
+	 */
+	@Test
+	public void shouldUpdateRouteTest() {
+		Route ce2 = new Route("CE2");
+		List<Route> routes = service.readInRawRoutes("AB5, BC4, CD8, DC4, DE6, AD5, CE7, EB3, AE10");
+		routes = service.readInRawRoutes("AB5, BC4, CD8, DC4, DE6, AD5, CE2, EB3, AE10");
+
+		assertTrue(routes.size() == 9);
+		assertTrue(routes.contains(ce2));
 	}
 }

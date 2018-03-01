@@ -54,13 +54,14 @@ public class Route {
 	public String toString() {
 		return this.cityStart.concat(this.cityEnd).concat(String.valueOf(this.distance));
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cityEnd == null) ? 0 : cityEnd.hashCode());
 		result = prime * result + ((cityStart == null) ? 0 : cityStart.hashCode());
+		result = prime * result + distance;
 		return result;
 	}
 
@@ -83,9 +84,11 @@ public class Route {
 				return false;
 		} else if (!cityStart.equals(other.cityStart))
 			return false;
+		if (distance != other.distance)
+			return false;
 		return true;
 	}
-	
+
 	public boolean sameRoute(Route route) {
 		if (route != null) {			
 			return getRoute().equals(route.getRoute());
